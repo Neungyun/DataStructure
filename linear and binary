@@ -55,22 +55,17 @@ int find_linear(int a[], int n, int key) { // 배열 첫 원소의 주소와, �
 
 
 int main() {
-	int find_num = 499999999;
-	int index1 = 0, index2 = 0;
-	int ary[500000000];
-	int* tmp_array;
-	int tmp_idx = 0;
-	int tmp_idx_array[50];
-	int linear_search_time[50];
-	int find_num_array[50];
-	int size_of_array[50];
-	int binary_search_array[50];
-	clock_t start0, finish0, start1, finish1, start2, finish2;
+	int find_num = 499999999; //찾을 숫자(배열의 끝 숫자)
+	int index1 = 0, index2 = 0; //각 함수로 찾은 index값을 반환할 변수
+	int ary[500000000];//배열 선언(원소 5억개)
+	int* tmp_array; //배열의 시작 주소를 바꿀 포인터 변수
+	int size_of_array; // 배열의 크기를 저장할 변수 
+	clock_t start0, finish0, start1, finish1, start2, finish2; //시간을 측정하기 위함
+	int cnt = 0;
 
 	printf("array_size = %d\n", sizeof(ary) / sizeof(int));
 	printf("find_num = %d\n", find_num);
 	start0 = clock();
-	int cnt = 0;
 	for (int i = 0; i < 500000000; i++) {
 		ary[i] = i;
 	}
@@ -79,10 +74,9 @@ int main() {
 	printf("array making time = %d ms\n\n", diff0);
 	// make array
 
-
 	/* 포인터를 이용해 배열의 크기를 줄여가며 검색시간 비교하기*/
 
-	for (int k = 0; k < 500000000; k += 10000000)
+	for (int k = 0; k < 500000000; k += 50000000)
 	{
 		tmp_array = ary + k;
 		find_num = 499999999;
@@ -95,20 +89,10 @@ int main() {
 		finish2 = clock();
 		int diff1 = finish1 - start1;
 		int diff2 = finish2 - start2;
-		size_of_array[tmp_idx] = 500000000 - k;
-		tmp_idx_array[tmp_idx] = index1;
-		find_num_array[tmp_idx] = find_num;
-		linear_search_time[tmp_idx] = diff1;
-		//binary_search_array[tmp_idx] = diff2; //find_binary의 return 값이 cnt일 경우
-		binary_search_array[tmp_idx] = index2;  //find_binary 의 return값이 정답의 index값일 경우
-		tmp_idx++;
-	}
+		size_of_array = 500000000 - k;
 
-	for (int i = 0; i < 50; i++) {
-		printf("배열크기: %d\n선형검색 결과 array[%d] = %d(%d ms)\n이진검색 결과 array[%d] = %d\n,----------------------------------------  \n\n"
-			, size_of_array[i], tmp_idx_array[i], find_num_array[i], linear_search_time[i],binary_search_array[i], find_num_array[i]);
+		printf("배열크기: %d\n선형검색 결과 array[%d] = %d(%d ms)\n이진검색 결과 array[%d] = %d( %d ms)\n----------------------------------------  \n\n"
+			, size_of_array, index1, find_num, diff1, index2, find_num, diff2);		
 	}
-
 	return 0;
-
 }
