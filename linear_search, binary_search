@@ -3,12 +3,13 @@
 ## This code was written to compare the computational amount and speed of linear search and binary search.
 
 import numpy as np
-import time
 import matplotlib.pyplot as plt
+import numpy as np
 
-a = np.arange(3000000000)
+a = np.arange(1000000000)
 
-#linear search
+import time
+
 def find_sequential(a,key):
     cnt = 0
     for idx in a:
@@ -17,7 +18,7 @@ def find_sequential(a,key):
             return idx, cnt
     return -1
 
-#binary_search
+
 def find_binary(a,key):
     cnt = 0
     low = 0
@@ -27,41 +28,19 @@ def find_binary(a,key):
         mid = int((low + high) / 2)
         if a[mid] > key:
             high = mid
-        elif( a[mid] == key):
+        elif(a[mid] == key):
             return mid, cnt
         else:
             low = mid
     return -1, cnt
     
-   ary = np.arange(1,6,1)
-ary_size1=[]
-ary_size2=[]
-for i in ary:
-    ary_size1.append(i*10)
-    ary_size1.append(i*100)
-    ary_size1.append(i*1000)
-    ary_size1.append(i*10000)
-    ary_size1.append(i*100000)
-    ary_size1.append(i*1000000)
-    ary_size1.append(i*10000000)
-    ary_size2.append(i*10)
-    ary_size2.append(i*100)
-    ary_size2.append(i*1000)
-    ary_size2.append(i*10000)
-    ary_size2.append(i*100000)
-    ary_size2.append(i*1000000)
-    ary_size2.append(i*10000000)
-    ary_size2.append(i*100000000)
-for i in [1,2]:
-    ary_size2.append(i*1000000000)
-
-ary_size1 = sorted(ary_size1)
-ary_size2 = sorted(ary_size2)
-
-sequential_time = []
+    
+    size_ary = range(10000,1000000,10000)
+    
+    sequential_time = []
 sequential_count = []
 
-for i in ary_size1:
+for i in size_ary:
     num_array = a[:i]
     start = time.time()
     index, count = find_sequential(num_array,i-1)
@@ -70,25 +49,26 @@ for i in ary_size1:
     sequential_time.append(end-start) 
     sequential_count.append(count)
     
-    
-plt.figure(figsize=(20,10))
+    plt.figure(figsize=(9,4))
 plt.subplot(121)
 plt.title('running time')
 plt.xlabel('array size')
 plt.ylabel('second')
-plt.plot(ary_size1,sequential_time)
+plt.plot(size_ary,sequential_time)
 plt.subplot(122)
 plt.title('loop count')
 plt.xlabel('array size')
 plt.ylabel('count')
-plt.plot(ary_size1,sequential_count)
+plt.plot(size_ary,sequential_count)
 plt.show()
 
+
+size_ary2 = range(100,100000000,500000)
 
 binary_cnt=[]
 binary_time=[]
 index_list = []
-for i in ary_size2:
+for i in size_ary2:
     num_array = a[:i]
     start = time.time()
     index, cnt = find_binary(num_array,np.random.randint(i))
@@ -96,20 +76,20 @@ for i in ary_size2:
     end = time.time()
     print(f'cnt = {cnt}, running time = ', end - start)
     binary_time.append(end-start)  
-    
-    
-plt.figure(figsize=(20,10))
-plt.subplot(121)
+
+
+plt.figure(figsize=(9,4))
+plt.subplot(122)
 plt.title('Binary search count')
 plt.xlabel('array size')
 plt.ylabel('counts')
-plt.plot(ary_size2,binary_cnt)
-plt.subplot(122)
+plt.plot(size_ary2,binary_cnt,label='loop count')
+plt.plot(size_ary2,np.log2(size_ary2),label='log2(x)',linewidth=4)
+plt.legend(loc='lower right')
+plt.subplot(121)
 plt.title('Binary search running time')
 plt.xlabel('array size')
 plt.ylabel('seconds')
-plt.plot(ary_size2, binary_time)
-plt.ylim(-0.1,1)
+plt.plot(size_ary2, binary_time)
+plt.ylim(-0.01,0.1)
 plt.show()
-
-
