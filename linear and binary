@@ -91,8 +91,8 @@ int main() {
 		int diff2 = finish2 - start2;
 		size_of_array = 500000000 - k;
 
-		printf("배열크기: %d\n선형검색 결과 array[%d] = %d(%d ms)\n이진검색 결과 array[%d] = %d( %d ms)\n----------------------------------------  \n\n"
-			, size_of_array, index1, find_num, diff1, index2, find_num, diff2);		
+		printf("배열크기: %d\n선형검색 결과 array[%d] = %d(%d ms)\n이진검색 결과 array[%d] = %d( %d ms)\n,----------------------------------------  \n\n"
+			, size_of_array, index1, tmp_array[index1], diff1, index2, tmp_array[index2], diff2);		
 	}
 	return 0;
 }
